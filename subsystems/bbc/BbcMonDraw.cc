@@ -91,7 +91,7 @@ BbcMonDraw::~BbcMonDraw()
 {
   PRINT_DEBUG("In BbcMonDraw::~BbcMonDraw()");
 
-  ifdelete(bbcStyle);
+  delete bbcStyle;
 
   // ------------------------------------------------------
   // Canvas and Histogram
@@ -2736,32 +2736,6 @@ int BbcMonDraw::Draw(const std::string &what)
 
   //******************************************
   int iret = 0;
-  //  int idraw = 0;
-  /*
-     if (what == "ALL" || what == "FIRST")
-     {
-     iret += DrawFirst(what);
-     idraw++;
-     }
-     if (what == "ALL" || what == "SECOND")
-     {
-     iret += DrawSecond(what);
-     idraw++;
-     }
-  if (what == "ALL" || what == "HISTORY")
-  {
-    iret += DrawHistory(what);
-    //    idraw++;
-  }
-     */
-
-  /*
-     if (!idraw)
-     {
-     std::cout << __PRETTY_FUNCTION__ << " Unimplemented Drawing option: " << what << std::endl;
-     iret = -1;
-     }
-     */
 
   //******************************************
   return iret;
@@ -2769,6 +2743,7 @@ int BbcMonDraw::Draw(const std::string &what)
 
 int BbcMonDraw::DrawFirst(const std::string & /*unused*/)
 {
+  int canvasindex = 0;
   PRINT_DEBUG("In BbcMonDraw::DrawFirst()");
   OnlMonClient *cl = OnlMonClient::instance();
   TH1 *bbcmon_hist1 = cl->getHisto("BBCMON_0", "bbc_zvertex");
@@ -2778,17 +2753,17 @@ int BbcMonDraw::DrawFirst(const std::string & /*unused*/)
   {
     MakeCanvas("BbcMon1");
   }
-  TC[0]->SetEditable(true);
-  TC[0]->Clear("D");
-  Pad[0]->cd();
+  TC[canvasindex]->SetEditable(true);
+  TC[canvasindex]->Clear("D");
+  Pad[canvasindex]->cd();
   if (bbcmon_hist1)
   {
     bbcmon_hist1->DrawCopy();
   }
   else
   {
-    DrawDeadServer(transparent[0]);
-    TC[0]->SetEditable(false);
+    DrawDeadServer(transparent[canvasindex]);
+    TC[canvasindex]->SetEditable(false);
     return -1;
   }
 
@@ -2809,11 +2784,11 @@ int BbcMonDraw::DrawFirst(const std::string & /*unused*/)
   runnostream << ThisName << "_1 Run " << cl->RunNumber()
               << ", Time: " << ctime(&evttime.first);
   runstring = runnostream.str();
-  transparent[0]->cd();
+  transparent[canvasindex]->cd();
   PrintRun.DrawText(0.5, 1., runstring.c_str());
-  TC[0]->Update();
-  TC[0]->Show();
-  TC[0]->SetEditable(false);
+  TC[canvasindex]->Update();
+  TC[canvasindex]->Show();
+  TC[canvasindex]->SetEditable(false);
   return 0;
 }
 
@@ -2931,129 +2906,6 @@ int BbcMonDraw::MakeHtml(const std::string &what)
 
   // cl->SaveLogFile(*this);
 
-  return 0;
-}
-
-int BbcMonDraw::DrawHistory(const std::string & /* what */)
-{
-  // you need to provide the following vectors
-  // which are filled from the db
-  std::vector<float> var;
-  std::vector<float> varerr;
-  std::vector<time_t> timestamp;
-  /*chiu
-    std::vector<int> runnumber;
-  //std::string varname = "bbcmondummy";
-  // this sets the time range from whihc values should be returned
-  time_t begin = 0;            // begin of time (1.1.1970)
-  time_t end = time(nullptr);  // current time (right NOW)
-  int iret = dbvars->GetVar(begin, end, varname, timestamp, runnumber, var, varerr);
-  if (iret)
-  {
-  std::cout << __PRETTY_FUNCTION__ << " Error in db access" << std::endl;
-  return iret;
-  }
-  */
-  if (!gROOT->FindObject("BbcMon4"))
-  {
-    MakeCanvas("BbcMon4");
-  }
-  // timestamps come sorted in ascending order
-  float *x = new float[var.size()];
-  float *y = new float[var.size()];
-  float *ex = new float[var.size()];
-  float *ey = new float[var.size()];
-  // int n = var.size();
-  for (unsigned int i = 0; i < var.size(); i++)
-  {
-    //       std::cout << "timestamp: " << ctime(&timestamp[i])
-    // 	   << ", run: " << runnumber[i]
-    // 	   << ", var: " << var[i]
-    // 	   << ", varerr: " << varerr[i]
-    // 	   << std::endl;
-    x[i] = timestamp[i] - TimeOffsetTicks;
-    y[i] = var[i];
-    ex[i] = 0;
-    ey[i] = varerr[i];
-  }
-
-  /* need to implement history for BBC
-     Pad[4]->cd(); // neeed to fix
-     if (gr[0])
-     {
-     delete gr[0];
-     }
-     gr[0] = new TGraphErrors(n, x, y, ex, ey);
-     gr[0]->SetMarkerColor(4);
-     gr[0]->SetMarkerStyle(21);
-     gr[0]->Draw("ALP");
-     gr[0]->GetXaxis()->SetTimeDisplay(1);
-     gr[0]->GetXaxis()->SetLabelSize(0.03);
-  // the x axis labeling looks like crap
-  // please help me with this, the SetNdivisions
-  // don't do the trick
-  gr[0]->GetXaxis()->SetNdivisions(-1006);
-  gr[0]->GetXaxis()->SetTimeOffset(TimeOffsetTicks);
-  gr[0]->GetXaxis()->SetTimeFormat("%Y/%m/%d %H:%M");
-  */
-  delete[] x;
-  delete[] y;
-  delete[] ex;
-  delete[] ey;
-
-  /*chiu
-    varname = "bbcmoncount";
-    iret = dbvars->GetVar(begin, end, varname, timestamp, runnumber, var, varerr);
-    if (iret)
-    {
-    std::cout << __PRETTY_FUNCTION__ << " Error in db access" << std::endl;
-    return iret;
-    }
-    */
-  x = new float[var.size()];
-  y = new float[var.size()];
-  ex = new float[var.size()];
-  ey = new float[var.size()];
-  // n = var.size();
-  for (unsigned int i = 0; i < var.size(); i++)
-  {
-    //       std::cout << "timestamp: " << ctime(&timestamp[i])
-    // 	   << ", run: " << runnumber[i]
-    // 	   << ", var: " << var[i]
-    // 	   << ", varerr: " << varerr[i]
-    // 	   << std::endl;
-    x[i] = timestamp[i] - TimeOffsetTicks;
-    y[i] = var[i];
-    ex[i] = 0;
-    ey[i] = varerr[i];
-  }
-
-  /* Need to implement
-     Pad[5]->cd();
-     if (gr[1])
-     {
-     delete gr[1];
-     }
-     gr[1] = new TGraphErrors(n, x, y, ex, ey);
-     gr[1]->SetMarkerColor(4);
-     gr[1]->SetMarkerStyle(21);
-     gr[1]->Draw("ALP");
-     gr[1]->GetXaxis()->SetTimeDisplay(1);
-  // TC[2]->Update();
-  //    h1->GetXaxis()->SetTimeDisplay(1);
-  //    h1->GetXaxis()->SetLabelSize(0.03);
-  gr[1]->GetXaxis()->SetLabelSize(0.03);
-  gr[1]->GetXaxis()->SetTimeOffset(TimeOffsetTicks);
-  gr[1]->GetXaxis()->SetTimeFormat("%Y/%m/%d %H:%M");
-  //    h1->Draw();
-  */
-
-  delete[] x;
-  delete[] y;
-  delete[] ex;
-  delete[] ey;
-
-  TC[3]->Update();
   return 0;
 }
 

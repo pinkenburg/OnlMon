@@ -24,20 +24,20 @@ void StartPoms()
   //  pmf->RegisterSubSystem("EXAMPLE", "example");
   SubSystem *subsys = nullptr;
 
-  subsys = new SubSystem("MBD", "bbc");
-  subsys->AddAction("bbcDraw(\"FIRST\")", "MBD Vertex Monitor");
-  subsys->AddAction("bbcDraw(\"SECOND\")", "MBD Timing Monitor");
-  subsys->AddAction("bbcDraw(\"THIRD\")", "MBD Triggered Monitor");
-  subsys->AddAction("bbcDraw(\"BbcMon5\")", "Vertex for All Triggers");
-  subsys->AddAction("bbcDraw(\"MBD2MCR\")", "MBD TOGGLE VTX TO MCR");
-  subsys->AddAction("bbcDraw(\"MBDZRESET\")", "MBD RESET VTX");
-  // crashes
-  //  subsys->AddAction("bbcDraw(\"BbcMon6\")","Packet Decoder Status");
-  //  subsys->AddAction("bbcDraw(\"BbcAutoUpdate\")", "MBD VTX Auto Update");
-  //  subsys->AddAction("bbcDraw(\"BADGL1\")", "MBD TOGGLE IGNORE GL1 MISS");
-  subsys->AddAction("bbcDraw(\"BbcMonServerStats\")", "MBD Server Stats");
-  subsys->AddAction(new SubSystemActionSavePlot(subsys));
-  pmf->RegisterSubSystem(subsys);
+  // subsys = new SubSystem("MBD", "bbc");
+  // subsys->AddAction("bbcDraw(\"FIRST\")", "MBD Vertex Monitor");
+  // subsys->AddAction("bbcDraw(\"SECOND\")", "MBD Timing Monitor");
+  // subsys->AddAction("bbcDraw(\"THIRD\")", "MBD Triggered Monitor");
+  // subsys->AddAction("bbcDraw(\"BbcMon5\")", "Vertex for All Triggers");
+  // subsys->AddAction("bbcDraw(\"MBD2MCR\")", "MBD TOGGLE VTX TO MCR");
+  // subsys->AddAction("bbcDraw(\"MBDZRESET\")", "MBD RESET VTX");
+  // // crashes
+  // //  subsys->AddAction("bbcDraw(\"BbcMon6\")","Packet Decoder Status");
+  // //  subsys->AddAction("bbcDraw(\"BbcAutoUpdate\")", "MBD VTX Auto Update");
+  // //  subsys->AddAction("bbcDraw(\"BADGL1\")", "MBD TOGGLE IGNORE GL1 MISS");
+  // subsys->AddAction("bbcDraw(\"BbcMonServerStats\")", "MBD Server Stats");
+  // subsys->AddAction(new SubSystemActionSavePlot(subsys));
+  // pmf->RegisterSubSystem(subsys);
 
   subsys = new SubSystem("CEMC", "cemc");
   subsys->AddAction("cemcDraw(\"FIRST\")", "Towers");
@@ -134,18 +134,18 @@ void StartPoms()
   subsys->AddAction(new SubSystemActionSavePlot(subsys));
   pmf->RegisterSubSystem(subsys);
 
-  subsys = new SubSystem("SEPD", "sepd");
-  subsys->AddAction("sepdDraw(\"FIRST\")", "Average ADC vs Tile (Wheel Plot)");
-  subsys->AddAction("sepdDraw(\"SECOND\")", "ADC distributions");
-  subsys->AddAction("sepdDraw(\"THIRD_EXP\")", "EXPERT North vs South Correlations");
-  subsys->AddAction("sepdDraw(\"THIRD\")", "SHIFT CREW North vs South Correlations");
-  subsys->AddAction("sepdDraw(\"FOURTH\")", "Wave Forms");
-  subsys->AddAction("sepdDraw(\"FIFTH\")", "Packet Information");
-  subsys->AddAction("sepdDraw(\"SIXTH\")", "Noise RMS");
-  //subsys->AddAction("sepdDraw(\"SEVENTH\")", "Packet Decoder Status");
-  subsys->AddAction("sepdDraw(\"SERVERSTATS\")", "Server Stats");
-  subsys->AddAction(new SubSystemActionSavePlot(subsys));
-  pmf->RegisterSubSystem(subsys);
+  // subsys = new SubSystem("SEPD", "sepd");
+  // subsys->AddAction("sepdDraw(\"FIRST\")", "Average ADC vs Tile (Wheel Plot)");
+  // subsys->AddAction("sepdDraw(\"SECOND\")", "ADC distributions");
+  // subsys->AddAction("sepdDraw(\"THIRD_EXP\")", "EXPERT North vs South Correlations");
+  // subsys->AddAction("sepdDraw(\"THIRD\")", "SHIFT CREW North vs South Correlations");
+  // subsys->AddAction("sepdDraw(\"FOURTH\")", "Wave Forms");
+  // subsys->AddAction("sepdDraw(\"FIFTH\")", "Packet Information");
+  // subsys->AddAction("sepdDraw(\"SIXTH\")", "Noise RMS");
+  // //subsys->AddAction("sepdDraw(\"SEVENTH\")", "Packet Decoder Status");
+  // subsys->AddAction("sepdDraw(\"SERVERSTATS\")", "Server Stats");
+  // subsys->AddAction(new SubSystemActionSavePlot(subsys));
+  // pmf->RegisterSubSystem(subsys);
 
   // subsys = new SubSystem("SPIN", "spin");
   // subsys->AddAction("spinDraw(\"FIRST\")", "Spin");
@@ -229,17 +229,17 @@ void StartPoms()
   subsys->AddAction(new SubSystemActionSavePlot(subsys));
   pmf->RegisterSubSystem(subsys);
 
-  subsys = new SubSystem("ZDC/SMD", "zdc");
-  subsys->AddAction("zdcDraw(\"FIRST\")", "ZDC 1st Monitor");
-  subsys->AddAction("zdcDraw(\"SECOND\")", "ZDC 2nd Monitor");
-  subsys->AddAction("zdcDraw(\"ZDC_WAVEFORM\")", "ZDC Wave form");
-  subsys->AddAction("zdcDraw(\"SMDVALUES\")", "SMD Values");
-  subsys->AddAction("zdcDraw(\"SMDN&S\")", "SMD North South");
-  subsys->AddAction("zdcDraw(\"SMD_N_IND\")", "SMD North Individual");
-  subsys->AddAction("zdcDraw(\"SMD_S_IND\")", "SMD South Individual");
-  subsys->AddAction("zdcDraw(\"SMD_MULTIPLICITIES\")", "SMD Multiplicities");
-  subsys->AddAction(new SubSystemActionSavePlot(subsys));
-  pmf->RegisterSubSystem(subsys);
+  // subsys = new SubSystem("ZDC/SMD", "zdc");
+  // subsys->AddAction("zdcDraw(\"FIRST\")", "ZDC 1st Monitor");
+  // subsys->AddAction("zdcDraw(\"SECOND\")", "ZDC 2nd Monitor");
+  // subsys->AddAction("zdcDraw(\"ZDC_WAVEFORM\")", "ZDC Wave form");
+  // subsys->AddAction("zdcDraw(\"SMDVALUES\")", "SMD Values");
+  // subsys->AddAction("zdcDraw(\"SMDN&S\")", "SMD North South");
+  // subsys->AddAction("zdcDraw(\"SMD_N_IND\")", "SMD North Individual");
+  // subsys->AddAction("zdcDraw(\"SMD_S_IND\")", "SMD South Individual");
+  // subsys->AddAction("zdcDraw(\"SMD_MULTIPLICITIES\")", "SMD Multiplicities");
+  // subsys->AddAction(new SubSystemActionSavePlot(subsys));
+  // pmf->RegisterSubSystem(subsys);
 
   // subsys = new SubSystem("Spin", "spin");
   // subsys->AddAction("spinDraw(\"FIRST\")", "Spin");
